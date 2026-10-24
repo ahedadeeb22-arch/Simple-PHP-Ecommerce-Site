@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة منتج جديد - لوحة تحكم متجر ميرا</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f4f6f9;
+        }
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            padding-top: 25px;
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.08);
+            width: 270px;
+            flex-shrink: 0;
+        }
+        .sidebar-brand {
+            padding: 0 20px 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        .sidebar-brand h4 {
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .sidebar-brand span {
+            color: #38bdf8;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .sidebar .nav-link {
+            color: #cbd5e1;
+            padding: 14px 22px;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border-right: 4px solid transparent;
+        }
+        .sidebar .nav-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .sidebar .nav-link.active {
+            color: #fff;
+            background: rgba(37, 99, 235, 0.2);
+            border-right-color: #38bdf8;
+        }
+        .sidebar .nav-link i {
+            margin-left: 12px;
+            width: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 30px;
+            flex-grow: 1;
+        }
+        .form-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+        }
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            padding: 11px 14px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+        .btn-primary {
+            background-color: #2563eb;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 25px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+        .admin-topbar {
+            background: #fff;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        footer {
+            background: #fff;
+            color: #64748b;
+            padding: 18px 0;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 40px;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <!-- القائمة الجانبية للوحة التحكم -->
+        <div class="sidebar">
+            <div class="sidebar-brand">
+                <h4><i class="fas fa-store me-2"></i> متجر ميرا</h4>
+                <span><i class="fas fa-user-shield me-1"></i> لوحة المدير العام</span>
+            </div>
+            <div class="mt-4">
+                <a href="/admin/index.php" class="nav-link active">
+                    <i class="fas fa-plus-circle"></i> إضافة منتج جديد
+                </a>
+                <a href="/admin/manage_products.php" class="nav-link">
+                    <i class="fas fa-boxes-stacked"></i> إدارة المنتجات
+                </a>
+                <a href="/admin/add_category.php" class="nav-link">
+                    <i class="fas fa-tags"></i> الأقسام والتصنيفات
+                </a>
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 15px 20px;">
+                <a href="/products.php" class="nav-link text-info">
+                    <i class="fas fa-eye"></i> معاينة المتجر كزبون
+                </a>
+                <a href="/logout.php" class="nav-link text-danger">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                </a>
+            </div>
+        </div>
+
+        <!-- منطقة المحتوى الرئيسي -->
+        <div class="flex-grow-1">
+            <div class="content">
+                <!-- الشريط العلوي -->
+                <div class="admin-topbar">
+                    <div>
+                        <h4 class="mb-0 fw-bold text-dark">مرحباً بك، المدير العام (Admin) 👋</h4>
+                        <small class="text-muted">أنت مسجل الدخول بصلاحيات الإدارة الكاملة للمتجر</small>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="/products.php" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-shopping-bag me-1"></i> تصفح المتجر
+                        </a>
+                        <a href="/logout.php" class="btn btn-outline-danger btn-sm">
+                            <i class="fas fa-power-off me-1"></i> خروج
+                        </a>
+                    </div>
+                </div>
+
+                <!-- إحصائيات سريعة -->
+                <% if (typeof stats !== 'undefined') { %>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-primary-subtle text-primary">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                            <div>
+                                <h3 class="fw-bold mb-0 text-dark"><%= stats.totalProducts %></h3>
+                                <span class="text-muted small">إجمالي المنتجات</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-success-subtle text-success">
+                                <i class="fas fa-tags"></i>
+                            </div>
+                            <div>
+                                <h3 class="fw-bold mb-0 text-dark"><%= stats.totalCategories %></h3>
+                                <span class="text-muted small">إجمالي الأقسام</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-warning-subtle text-warning">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div>
+                                <h3 class="fw-bold mb-0 text-dark"><%= stats.totalCartItems %></h3>
+                                <span class="text-muted small">عناصر في السلات</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+                <!-- بطاقة إضافة المنتج -->
+                <div class="form-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                        <h3 class="fw-bold text-dark mb-0">
+                            <i class="fas fa-plus-circle text-primary me-2"></i> إضافة منتج جديد إلى المتجر
+                        </h3>
+                        <a href="/admin/manage_products.php" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-list me-1"></i> عرض كافة المنتجات
+                        </a>
+                    </div>
+
+                    <% if (typeof successMsg !== 'undefined' && successMsg) { %>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i> <%= successMsg %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <% } %>
+
+                    <form method="POST" action="/admin/add_product.php" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label for="title" class="form-label fw-bold">اسم المنتج</label>
+                                <input type="text" class="form-control" id="title" name="title" placeholder="مثال: هاتف ذكي سامسونج جالاكسي S24" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="category_id" class="form-label fw-bold">القسم / التصنيف</label>
+                                <select class="form-select" id="category_id" name="category_id" required>
+                                    <% categories.forEach(function(category) { %>
+                                        <option value="<%= category.id %>"><%= category.name %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label fw-bold">وصف وتفاصيل المنتج</label>
+                            <textarea class="form-control" id="description" name="description" rows="4" placeholder="اكتب وصفاً مفصلاً للمنتج ومواصفاته الفنية..." required></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="price" class="form-label fw-bold">السعر الأصلي (ر.س)</label>
+                                <input type="number" step="0.01" class="form-control" id="price" name="price" placeholder="مثال: 1200" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="offer" class="form-label fw-bold">سعر العرض بعد التخفيض (ر.س)</label>
+                                <input type="number" step="0.01" class="form-control" id="offer" name="offer" placeholder="مثال: 999" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="image" class="form-label fw-bold">رفع صورة المنتج (من جهازك)</label>
+                                <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                                <small class="text-muted">اختر ملف صورة من جهازك، أو اتركها واستخدم رابطاً خارجياً أدناه</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="image_url" class="form-label fw-bold">أو أدخل رابط صورة مباشر (URL)</label>
+                                <input type="url" class="form-control" id="image_url" name="image_url" placeholder="https://images.unsplash.com/...">
+                                <small class="text-muted">اختياري - في حال لم ترغب برفع ملف محلي</small>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fas fa-check-circle me-1"></i> حفظ ونشر المنتج
+                            </button>
+                            <button type="reset" class="btn btn-outline-secondary px-3">
+                                <i class="fas fa-undo me-1"></i> تفريغ الحقول
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <footer class="text-center">
+                    <p class="mb-0">جميع الحقوق محفوظة &copy; 2026 <strong>متجر ميرا - Mera-Shop</strong></p>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

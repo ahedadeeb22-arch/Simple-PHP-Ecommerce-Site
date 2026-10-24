@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المنتجات - لوحة تحكم متجر ميرا</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f4f6f9;
+        }
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            padding-top: 25px;
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.08);
+            width: 270px;
+            flex-shrink: 0;
+        }
+        .sidebar-brand {
+            padding: 0 20px 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        .sidebar-brand h4 {
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .sidebar-brand span {
+            color: #38bdf8;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .sidebar .nav-link {
+            color: #cbd5e1;
+            padding: 14px 22px;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border-right: 4px solid transparent;
+        }
+        .sidebar .nav-link:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .sidebar .nav-link.active {
+            color: #fff;
+            background: rgba(37, 99, 235, 0.2);
+            border-right-color: #38bdf8;
+        }
+        .sidebar .nav-link i {
+            margin-left: 12px;
+            width: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 30px;
+            flex-grow: 1;
+        }
+        .table-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            padding: 25px;
+            border: 1px solid #e2e8f0;
+        }
+        .table {
+            vertical-align: middle;
+            margin-bottom: 0;
+        }
+        .table thead th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+            border-bottom: 2px solid #e2e8f0;
+            padding: 14px;
+        }
+        .table tbody td {
+            padding: 14px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .product-thumb {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+        .admin-topbar {
+            background: #fff;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .btn-warning {
+            background-color: #f59e0b;
+            border: none;
+            color: #fff;
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-weight: 600;
+        }
+        .btn-warning:hover {
+            background-color: #d97706;
+            color: #fff;
+        }
+        .btn-danger {
+            background-color: #ef4444;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-weight: 600;
+        }
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+        .modal-content {
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .modal-header {
+            border-bottom: 1px solid #f1f5f9;
+            padding: 20px;
+        }
+        .modal-footer {
+            border-top: 1px solid #f1f5f9;
+            padding: 15px 20px;
+        }
+        footer {
+            background: #fff;
+            color: #64748b;
+            padding: 18px 0;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 40px;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <!-- القائمة الجانبية -->
+        <div class="sidebar">
+            <div class="sidebar-brand">
+                <h4><i class="fas fa-store me-2"></i> متجر ميرا</h4>
+                <span><i class="fas fa-user-shield me-1"></i> لوحة المدير العام</span>
+            </div>
+            <div class="mt-4">
+                <a href="/admin/index.php" class="nav-link">
+                    <i class="fas fa-plus-circle"></i> إضافة منتج جديد
+                </a>
+                <a href="/admin/manage_products.php" class="nav-link active">
+                    <i class="fas fa-boxes-stacked"></i> إدارة المنتجات
+                </a>
+                <a href="/admin/add_category.php" class="nav-link">
+                    <i class="fas fa-tags"></i> الأقسام والتصنيفات
+                </a>
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 15px 20px;">
+                <a href="/products.php" class="nav-link text-info">
+                    <i class="fas fa-eye"></i> معاينة المتجر كزبون
+                </a>
+                <a href="/logout.php" class="nav-link text-danger">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                </a>
+            </div>
+        </div>
+
+        <!-- منطقة المحتوى الرئيسي -->
+        <div class="flex-grow-1">
+            <div class="content">
+                <div class="admin-topbar">
+                    <div>
+                        <h4 class="mb-0 fw-bold text-dark">إدارة منتجات المتجر 📦</h4>
+                        <small class="text-muted">عرض وتعديل وحذف المنتجات المتوفرة في المتجر</small>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="/admin/add_product.php" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus me-1"></i> إضافة منتج جديد
+                        </a>
+                        <a href="/products.php" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-eye me-1"></i> عرض المتجر
+                        </a>
+                    </div>
+                </div>
+
+                <% if (typeof message !== 'undefined' && message) { %>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle me-2"></i> <%= message %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <% } %>
+
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th style="width: 80px;">الصورة</th>
+                                    <th>اسم المنتج</th>
+                                    <th>القسم</th>
+                                    <th>السعر الأصلي</th>
+                                    <th>سعر العرض</th>
+                                    <th>الوصف</th>
+                                    <th style="width: 170px;">الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (products.length === 0) { %>
+                                    <tr>
+                                        <td colspan="7" class="text-center py-4 text-muted">
+                                            لا توجد أي منتجات حتى الآن. <a href="/admin/add_product.php">أضف منتجك الأول الآن</a>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                                <% products.forEach(function(product) { %>
+                                    <tr>
+                                        <td>
+                                            <img src="<%= resolveImage(product.image) %>" class="product-thumb" alt="<%= product.title %>">
+                                        </td>
+                                        <td class="fw-bold text-dark"><%= product.title %></td>
+                                        <td>
+                                            <span class="badge bg-light text-primary border">
+                                                <i class="fas fa-tag me-1"></i> <%= product.category_name %>
+                                            </span>
+                                        </td>
+                                        <td class="text-decoration-line-through text-muted"><%= product.price %> ر.س</td>
+                                        <td class="fw-bold text-success"><%= product.offer %> ر.س</td>
+                                        <td>
+                                            <span class="text-truncate d-inline-block text-muted" style="max-width: 200px;">
+                                                <%= product.description %>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-2">
+                                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal<%= product.id %>">
+                                                    <i class="fas fa-edit me-1"></i> تعديل
+                                                </button>
+                                                <a href="/admin/manage_products.php?action=delete&id=<%= product.id %>" class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد من حذف هذا المنتج نهائياً؟')">
+                                                    <i class="fas fa-trash-alt me-1"></i> حذف
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- نافذة التعديل Modal -->
+                                    <div class="modal fade" id="editModal<%= product.id %>" tabindex="-1" aria-labelledby="editModalLabel<%= product.id %>" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title fw-bold" id="editModalLabel<%= product.id %>">
+                                                        <i class="fas fa-edit text-warning me-2"></i> تعديل بيانات المنتج: <%= product.title %>
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <form method="POST" action="/admin/manage_products.php" enctype="multipart/form-data">
+                                                    <div class="modal-body p-4">
+                                                        <input type="hidden" name="id" value="<%= product.id %>">
+                                                        
+                                                        <div class="mb-3">
+                                                            <label class="form-label fw-bold">اسم المنتج</label>
+                                                            <input type="text" class="form-control" name="title" value="<%= product.title %>" required>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label fw-bold">وصف وتفاصيل المنتج</label>
+                                                            <textarea class="form-control" name="description" rows="3" required><%= product.description %></textarea>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-6 mb-3">
+                                                                <label class="form-label fw-bold">السعر الأصلي (ر.س)</label>
+                                                                <input type="number" step="0.01" class="form-control" name="price" value="<%= product.price %>" required>
+                                                            </div>
+                                                            <div class="col-md-6 mb-3">
+                                                                <label class="form-label fw-bold">سعر العرض (ر.س)</label>
+                                                                <input type="number" step="0.01" class="form-control" name="offer" value="<%= product.offer %>" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label class="form-label fw-bold">القسم</label>
+                                                            <select class="form-select" name="category_id" required>
+                                                                <% categories.forEach(function(cat) { %>
+                                                                    <option value="<%= cat.id %>" <%= cat.id == product.category_id ? 'selected' : '' %>>
+                                                                        <%= cat.name %>
+                                                                    </option>
+                                                                <% }); %>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="row mb-3">
+                                                            <div class="col-md-6">
+                                                                <label class="form-label fw-bold">تحديث الصورة (رفع ملف جديد)</label>
+                                                                <input type="file" class="form-control" name="image" accept="image/*">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label fw-bold">أو رابط صورة مباشر (URL)</label>
+                                                                <input type="url" class="form-control" name="image_url" value="<%= product.image.startsWith('http') ? product.image : '' %>" placeholder="https://...">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <i class="fas fa-save me-1"></i> حفظ التعديلات
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <footer class="text-center">
+                    <p class="mb-0">جميع الحقوق محفوظة &copy; 2026 <strong>متجر ميرا - Mera-Shop</strong></p>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
